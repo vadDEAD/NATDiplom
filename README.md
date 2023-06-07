@@ -14,6 +14,9 @@
 
 ### Инструкции по установке
 1. Скачайте архив;
+1 запускаем докер, второе запускаем базу данных, 3 запускаем приложение 
+для приложение под базой данных SQL java "-Dspring.datasource.url=jdbc:mysql://localhost:3306/app" -jar artifacts/aqa-shop.jar
+для PJStgres java "-Dspring.datasource.url=jdbc:postgresql://localhost:5432/app" -jar artifacts/aqa-shop.jar
 
    
 
