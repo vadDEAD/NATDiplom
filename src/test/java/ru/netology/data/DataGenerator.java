@@ -90,8 +90,9 @@ public class DataGenerator {
     public static CardInfo getDeclinedCard() {
         return new CardInfo(declineCard, getValidMonth(), getValidYear(), getOwner(), getCVC());
     }
+
     public static CardInfo getNonExistentCard() {
-        return new CardInfo ("7777 7777 7777 7777", getValidMonth(), getValidYear(), getOwner(), getCVC());
+        return new CardInfo("7777 7777 7777 7777", getValidMonth(), getValidYear(), getOwner(), getCVC());
     }
 
     public static CardInfo getCardWithIncompleteCardNumber() {
@@ -146,6 +147,4 @@ public class DataGenerator {
         private String owner;
         private String cvc;
     }
-
 }
-

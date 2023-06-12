@@ -1,6 +1,5 @@
 plugins {
     id 'java'
-    id "io.freefair.lombok" version "5.3.0"
     id 'io.qameta.allure' version '2.11.2'
 }
 
@@ -44,6 +43,6 @@ test {
     systemProperty 'selenide.headless', System.getProperty('headless')
     systemProperty 'db.user', System.getProperty('db.user', 'app')
     systemProperty 'db.password', System.getProperty('db.password', 'pass')
-    systemProperty 'sut.url', System.getProperty('sut.url',"http://localhost:8080/")
+    systemProperty 'sut.url', System.getProperty('sut.url', "http://localhost:8080/")
     systemProperty 'db.url', System.getProperty('db.url')
 }

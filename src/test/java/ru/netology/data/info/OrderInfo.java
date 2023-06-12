@@ -1,11 +1,11 @@
-package ru.netology.data;
+package ru.netology.data.info;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 @Data
 @RequiredArgsConstructor
-public class CardInfo {
+public class OrderInfo {
     private String id;
     private String created;
     private String credit_id;
