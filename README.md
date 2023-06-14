@@ -27,6 +27,7 @@
  * для работы с MySQL с помощью команды ./gradlew clean test "-Ddb.url=jdbc:mysql://localhost:3306/app"
  * для работы с Postgres с помощью команды ./gradlew clean test "-Ddb.url=jdbc:postgresql://localhost:5432/app"
 
+
 ### Формирование отчетов Allure
 Для получения отчета использовать команду ./gradlew allureServe
 
