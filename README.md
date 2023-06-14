@@ -9,21 +9,26 @@
 
 ### Необходимое окружение:
 
-* установленный Node.js;
 * установленный Docker;
 * установленная IntelliJ IDEA;
 * Java 11
-* браузер
+* браузер (Предпочтительно "Google Chrome")
 
 ### Инструкции по установке
 
-1. Скачайте архив;
-   1 запускаем докер, второе запускаем базу данных, 3 запускаем приложение
-   для приложение под базой данных
-   SQL java
-   "-Dspring.datasource.url=jdbc:mysql://localhost:3306/app" -jar artifacts/aqa-shop.jar
-   для PJStgres java
-   "-Dspring.datasource.url=jdbc:postgresql://localhost:5432/app" -jar artifacts/aqa-shop.jar
+1. Скачайте (Клонируйте) архив;
+2. Запустить Docker Desktop 
+3. Открыть код программы в IDEA. 
+4. Запустить контейнеры (MySql, PostgreSQL) в терминале с помощью команды 'docker-compose up --build'
+5. Запустить тестируемый сервис в терминале:
+* База данных на MySQL с помощью команды  'java "-Dspring.datasource.url=jdbc:mysql://localhost:3306/app" -jar artifacts/aqa-shop.jar'
+* База данных на Postgres с помощью команды  'java "-Dspring.datasource.url=jdbc:postgresql://localhost:5432/app" -jar artifacts/aqa-shop.jar' 
+6. Запустить тесты в терминале:
+ * для работы с MySQL с помощью команды ./gradlew clean test "-Ddb.url=jdbc:mysql://localhost:3306/app"
+ * для работы с Postgres с помощью команды ./gradlew clean test "-Ddb.url=jdbc:postgresql://localhost:5432/app"
+
+### Формирование отчетов Allure
+Для получения отчета использовать команду ./gradlew allureServe
 
    
 
