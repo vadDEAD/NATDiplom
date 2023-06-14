@@ -22,14 +22,14 @@
 4. Запустить контейнеры (MySql, PostgreSQL) в терминале с помощью команды:
 - `docker-compose up --build`
 5. Запустить тестируемый сервис в терминале:
- * База данных на MySQL с помощью команды:
+База данных на MySQL с помощью команды:
 - `java "-Dspring.datasource.url=jdbc:mysql://localhost:3306/app" -jar artifacts/aqa-shop.jar`
- * База данных на Postgres с помощью команды:
+База данных на Postgres с помощью команды:
 - `java "-Dspring.datasource.url=jdbc:postgresql://localhost:5432/app" -jar artifacts/aqa-shop.jar`
 6. Запустить тесты в терминале:
- * для работы с MySQL с помощью команды:
+Для работы с MySQL с помощью команды:
 - `./gradlew clean test "-Ddb.url=jdbc:mysql://localhost:3306/app"`
- * для работы с Postgres с помощью команды: 
+Для работы с Postgres с помощью команды: 
 - `./gradlew clean test "-Ddb.url=jdbc:postgresql://localhost:5432/app"`
 
 
