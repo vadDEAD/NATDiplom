@@ -23,19 +23,19 @@
 - `docker-compose up --build`
 5. Запустить тестируемый сервис в терминале:
 - База данных на MySQL с помощью команды:
-* `java "-Dspring.datasource.url=jdbc:mysql://localhost:3306/app" -jar artifacts/aqa-shop.jar`
+`java "-Dspring.datasource.url=jdbc:mysql://localhost:3306/app" -jar artifacts/aqa-shop.jar`
 - База данных на Postgres с помощью команды:
-- `java "-Dspring.datasource.url=jdbc:postgresql://localhost:5432/app" -jar artifacts/aqa-shop.jar`
+`java "-Dspring.datasource.url=jdbc:postgresql://localhost:5432/app" -jar artifacts/aqa-shop.jar`
 6. Запустить тесты в терминале:
 - Для работы с MySQL с помощью команды:
-- `./gradlew clean test "-Ddb.url=jdbc:mysql://localhost:3306/app"`
+`./gradlew clean test "-Ddb.url=jdbc:mysql://localhost:3306/app"`
 - Для работы с Postgres с помощью команды: 
-- `./gradlew clean test "-Ddb.url=jdbc:postgresql://localhost:5432/app"`
+`./gradlew clean test "-Ddb.url=jdbc:postgresql://localhost:5432/app"`
 
 
 ### Формирование отчетов Allure
-Для получения отчета использовать команду 
-- `./gradlew allureServe`
+Для получения отчета использовать команду:
+`./gradlew allureServe`
 
    
 
