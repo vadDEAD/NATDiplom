@@ -19,19 +19,27 @@ public class DataGenerator {
         return approveCard.substring(0, 18);
     }
 
+    private static String getEmptyCardNumber() {
+        return getSpace();
+    }
+
     private static String getValidMonth() {
         return LocalDate.now().format(DateTimeFormatter.ofPattern("MM"));
+    }
+
+    private static String getEmptyMonth() {
+        return getSpace();
     }
 
     private static String getOverdueMonth() {
         return LocalDate.now().minusMonths(1).format(DateTimeFormatter.ofPattern("MM"));
     }
 
-    private static String getLowerMonthValue() {
+    private static String getLowNonexistentMonthValue() {
         return "00";
     }
 
-    private static String getGreaterMonthValue() {
+    private static String getGreatNonexistentMonthValue() {
         return "14";
     }
 
@@ -95,6 +103,10 @@ public class DataGenerator {
         return new CardInfo("7777 7777 7777 7777", getValidMonth(), getValidYear(), getOwner(), getCVC());
     }
 
+    public static CardInfo getCardWithEmptyCardNumber() {
+        return new CardInfo(getEmptyCardNumber(), getValidMonth(), getValidYear(), getOwner(), getCVC());
+    }
+
     public static CardInfo getCardWithIncompleteCardNumber() {
         return new CardInfo(getIncompleteCardNumber(), getValidMonth(), getValidYear(), getOwner(), getCVC());
     }
@@ -107,12 +119,20 @@ public class DataGenerator {
         }
     }
 
-    public static CardInfo getCardWithLowerMonthValue() {
-        return new CardInfo(approveCard, getLowerMonthValue(), getNextYear(), getOwner(), getCVC());
+    public static CardInfo getCardWithEmptyMonth() {
+        return new CardInfo(approveCard, getEmptyMonth(), getValidYear(), getOwner(), getCVC());
     }
 
-    public static CardInfo getCardWithGreaterMonthValue() {
-        return new CardInfo(approveCard, getGreaterMonthValue(), getNextYear(), getOwner(), getCVC());
+    public static CardInfo getCardWithLowNonexistentMonthValue() {
+        return new CardInfo(approveCard, getLowNonexistentMonthValue(), getNextYear(), getOwner(), getCVC());
+    }
+
+    public static CardInfo getCardWithGreatNonexistentMonthValue() {
+        return new CardInfo(approveCard, getGreatNonexistentMonthValue(), getNextYear(), getOwner(), getCVC());
+    }
+
+    public static CardInfo getCardWithEmptyYear() {
+        return new CardInfo(approveCard, getValidMonth(), getSpace(), getOwner(), getCVC());
     }
 
     public static CardInfo getCardWithOverdueYear() {
