@@ -1,11 +1,13 @@
 package ru.netology.data;
 
+import com.codeborne.selenide.Condition;
 import com.github.javafaker.Faker;
 import lombok.Value;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
+
 
 public class DataGenerator {
     private static final String approveCard = "4444 4444 4444 4441";
@@ -58,6 +60,12 @@ public class DataGenerator {
     private static String getFutureYear() {
         return LocalDate.now().plusYears(8).format(DateTimeFormatter.ofPattern("YY"));
     }
+
+    private static String getNotCompleteYear() {
+        Random random = new Random();
+        var number = numbers[random.nextInt(10)];
+        return number;
+        }
 
     private static String getSpace() {
         return " ";
@@ -134,6 +142,9 @@ public class DataGenerator {
     public static CardInfo getCardWithEmptyYear() {
         return new CardInfo(approveCard, getValidMonth(), getSpace(), getOwner(), getCVC());
     }
+    public static CardInfo getCardWithNotCompleteYear() {
+        return new CardInfo(approveCard, getValidMonth(), getNotCompleteYear() , getOwner(), getCVC());
+    }
 
     public static CardInfo getCardWithOverdueYear() {
         return new CardInfo(approveCard, getValidMonth(), getLastYear(), getOwner(), getCVC());
@@ -158,7 +169,9 @@ public class DataGenerator {
     public static CardInfo getCardWithIncompleteCVC() {
         return new CardInfo(approveCard, getValidMonth(), getValidYear(), getOwner(), getNumbers());
     }
-
+    public static CardInfo getCardWithEmptyCVC() {
+        return new CardInfo(approveCard, getValidMonth(), getValidYear(), getOwner(), getSpace());
+    }
     @Value
     public static class CardInfo {
         private String numberCard;
