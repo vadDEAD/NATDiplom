@@ -4,9 +4,11 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import ru.netology.data.DataGenerator;
 
+import java.time.Duration;
+
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.byText;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$x;
+import static com.codeborne.selenide.Selenide.*;
 
 public class PurchasePage {
     private final SelenideElement buyButton = $(byText("Купить"));
@@ -14,18 +16,25 @@ public class PurchasePage {
     private final SelenideElement creditButton = $(byText("Купить в кредит"));
     private final SelenideElement creditHeading = $(byText("Кредит по данным карты"));
     private final SelenideElement cardNumberField = $("input[placeholder='0000 0000 0000 0000']");
-    private final SelenideElement cardNumberFieldError = $x("//*[text()='Номер карты']/..//*[@class='input__sub']");
     private final SelenideElement monthField = $("input[placeholder='08']");
-    private final SelenideElement monthFieldError = $x("//*[text()='Месяц']/..//*[@class='input__sub']");
     private final SelenideElement yearField = $("input[placeholder='22']");
-    private final SelenideElement yearFieldError = $x("//*[text()='Год']/..//*[@class='input__sub']");
     private final SelenideElement ownerField = $(byText("Владелец")).parent().$("input");
-    private final SelenideElement ownerFieldError = $x("//*[text()='Владелец']/..//*[@class='input__sub']");
     private final SelenideElement cvcField = $("input[placeholder='999']");
-    private final SelenideElement cvcFieldError = $x("//*[text()='CVC/CVV']/..//*[@class='input__sub']");
+    private final SelenideElement continueButton = $("form button");
+
+    private SelenideElement cardNumberFieldError = $(byText("Неверный формат"));
+    private SelenideElement wrongExpirationMonthError = $(byText("Неверно указан срок действия карты"));
+    private SelenideElement monthFieldError = $(byText("Неверный формат"));
+    private SelenideElement previousYearError = $(byText("Истёк срок действия карты"));
+    private SelenideElement yearFieldError = $(byText("Неверный формат"));
+    private SelenideElement wrongExpirationYearError = $(byText("Неверно указан срок действия карты"));
+    private SelenideElement emptyOwnerError = $(byText("Поле обязательно для заполнения"));
+    private SelenideElement ownerFieldError = $(byText("Неверный формат"));
+    private SelenideElement cvcFieldError = $(byText("Неверный формат"));
+    private SelenideElement cvcEmptyError = $(byText("Неверный формат"));
+
     private final SelenideElement notificationSuccessfully = $(".notification_status_ok");
     private final SelenideElement notificationError = $(".notification_status_error");
-    private final SelenideElement continueButton = $("form button");
 
     public void cardPayment() {
         buyButton.click();
@@ -35,6 +44,14 @@ public class PurchasePage {
     public void cardCredit() {
         creditButton.click();
         creditHeading.shouldBe(Condition.visible);
+    }
+    public void sendingData(DataGenerator.CardInfo info) {
+        cardNumberField.setValue(info.getNumberCard());
+        monthField.setValue(info.getMonth());
+        yearField.setValue(info.getYear());
+        ownerField.setValue(info.getOwner());
+        cvcField.setValue(info.getCvc());
+        continueButton.click();
     }
 
     public void emptyForm() {
@@ -46,155 +63,6 @@ public class PurchasePage {
         cvcFieldError.shouldBe(Condition.visible);
     }
 
-    private void cardNumberFieldErrorHidden() {
-        monthFieldError.shouldBe(Condition.hidden);
-        yearFieldError.shouldBe(Condition.hidden);
-        ownerFieldError.shouldBe(Condition.hidden);
-        cvcFieldError.shouldBe(Condition.hidden);
-    }
-
-    public void emptyCardNumberField(DataGenerator.CardInfo info) {
-        monthField.setValue(info.getMonth());
-        yearField.setValue(info.getYear());
-        ownerField.setValue(info.getOwner());
-        cvcField.setValue(info.getCvc());
-        continueButton.click();
-        cardNumberFieldError.shouldBe(Condition.visible);
-        cardNumberFieldErrorHidden();
-    }
-
-    private void monthFieldErrorHidden() {
-        cardNumberFieldError.shouldBe(Condition.hidden);
-        yearFieldError.shouldBe(Condition.hidden);
-        ownerFieldError.shouldBe(Condition.hidden);
-        cvcFieldError.shouldBe(Condition.hidden);
-    }
-
-    public void emptyMonthField(DataGenerator.CardInfo info) {
-        cardNumberField.setValue(info.getNumberCard());
-        yearField.setValue(info.getYear());
-        ownerField.setValue(info.getOwner());
-        cvcField.setValue(info.getCvc());
-        continueButton.click();
-        monthFieldError.shouldBe(Condition.visible);
-        monthFieldErrorHidden();
-    }
-
-    private void yearFieldErrorHidden() {
-        cardNumberFieldError.shouldBe(Condition.hidden);
-        monthFieldError.shouldBe(Condition.hidden);
-        ownerFieldError.shouldBe(Condition.hidden);
-        cvcFieldError.shouldBe(Condition.hidden);
-    }
-
-    public void emptyYearField(DataGenerator.CardInfo info) {
-        cardNumberField.setValue(info.getNumberCard());
-        monthField.setValue(info.getMonth());
-        ownerField.setValue(info.getOwner());
-        cvcField.setValue(info.getCvc());
-        continueButton.click();
-        yearFieldError.shouldBe(Condition.visible);
-        yearFieldErrorHidden();
-    }
-
-    private void ownerFieldErrorHidden() {
-        cardNumberFieldError.shouldBe(Condition.hidden);
-        monthFieldError.shouldBe(Condition.hidden);
-        yearFieldError.shouldBe(Condition.hidden);
-        cvcFieldError.shouldBe(Condition.hidden);
-    }
-
-    public void emptyOwnerField(DataGenerator.CardInfo info) {
-        cardNumberField.setValue(info.getNumberCard());
-        monthField.setValue(info.getMonth());
-        yearField.setValue(info.getYear());
-        cvcField.setValue(info.getCvc());
-        continueButton.click();
-        ownerFieldError.shouldBe(Condition.visible);
-        ownerFieldErrorHidden();
-    }
-
-    private void cvcFieldErrorHidden() {
-        cardNumberFieldError.shouldBe(Condition.hidden);
-        monthFieldError.shouldBe(Condition.hidden);
-        yearFieldError.shouldBe(Condition.hidden);
-        ownerFieldError.shouldBe(Condition.hidden);
-    }
-
-    public void emptyCVCField(DataGenerator.CardInfo info) {
-        cardNumberField.setValue(info.getNumberCard());
-        monthField.setValue(info.getMonth());
-        yearField.setValue(info.getYear());
-        ownerField.setValue(info.getOwner());
-        continueButton.click();
-        cvcFieldError.shouldBe(Condition.visible);
-        cvcFieldErrorHidden();
-    }
-
-    public void invalidCardNumberField(DataGenerator.CardInfo info) {
-        cardNumberField.setValue(info.getNumberCard());
-        monthField.setValue(info.getMonth());
-        yearField.setValue(info.getYear());
-        ownerField.setValue(info.getOwner());
-        cvcField.setValue(info.getCvc());
-        continueButton.click();
-        cardNumberFieldError.shouldBe(Condition.visible);
-        cardNumberFieldErrorHidden();
-    }
-
-    public void invalidMonthField(DataGenerator.CardInfo info) {
-        cardNumberField.setValue(info.getNumberCard());
-        monthField.setValue(info.getMonth());
-        yearField.setValue(info.getYear());
-        ownerField.setValue(info.getOwner());
-        cvcField.setValue(info.getCvc());
-        continueButton.click();
-        monthFieldError.shouldBe(Condition.visible);
-        monthFieldErrorHidden();
-    }
-
-    public void invalidYearField(DataGenerator.CardInfo info) {
-        cardNumberField.setValue(info.getNumberCard());
-        monthField.setValue(info.getMonth());
-        yearField.setValue(info.getYear());
-        ownerField.setValue(info.getOwner());
-        cvcField.setValue(info.getCvc());
-        continueButton.click();
-        yearFieldError.shouldBe(Condition.visible);
-        yearFieldErrorHidden();
-    }
-
-    public void invalidOwnerField(DataGenerator.CardInfo info) {
-        cardNumberField.setValue(info.getNumberCard());
-        monthField.setValue(info.getMonth());
-        yearField.setValue(info.getYear());
-        ownerField.setValue(info.getOwner());
-        cvcField.setValue(info.getCvc());
-        continueButton.click();
-        ownerFieldError.shouldBe(Condition.visible);
-        ownerFieldErrorHidden();
-    }
-
-    public void invalidCVCField(DataGenerator.CardInfo info) {
-        cardNumberField.setValue(info.getNumberCard());
-        monthField.setValue(info.getMonth());
-        yearField.setValue(info.getYear());
-        ownerField.setValue(info.getOwner());
-        cvcField.setValue(info.getCvc());
-        continueButton.click();
-        cvcFieldError.shouldBe(Condition.visible);
-        cvcFieldErrorHidden();
-    }
-
-    public void sendingData(DataGenerator.CardInfo info) {
-        cardNumberField.setValue(info.getNumberCard());
-        monthField.setValue(info.getMonth());
-        yearField.setValue(info.getYear());
-        ownerField.setValue(info.getOwner());
-        cvcField.setValue(info.getCvc());
-        continueButton.click();
-    }
-
     public void bankApproved() {
         notificationSuccessfully.shouldBe(Condition.visible);
     }
@@ -202,4 +70,48 @@ public class PurchasePage {
     public void bankDeclined() {
         notificationError.shouldBe(Condition.visible);
     }
+
+    public void cardNumberFormatErrorVisible() {
+        cardNumberFieldError.shouldBe(visible, Duration.ofSeconds(15));
+    }
+
+
+    public void wrongFormatMonthErrorVisible() {
+        monthFieldError.shouldBe(visible, Duration.ofSeconds(15));
+    }
+
+    public void wrongExpirationMonthErrorVisible() {
+        wrongExpirationMonthError.shouldBe(visible, Duration.ofSeconds(15));
+    }
+
+    public void overdueYearErrorVisible() {
+        previousYearError.shouldBe(visible, Duration.ofSeconds(15));
+    }
+
+    public void wrongFormatYearErrorVisible() {
+        yearFieldError.shouldBe(visible, Duration.ofSeconds(15));
+    }
+
+    public void wrongExpirationYearErrorVisible() {
+        wrongExpirationYearError.shouldBe(visible, Duration.ofSeconds(15));
+    }
+
+
+    public void emptyOwnerErrorVisible() {
+        emptyOwnerError.shouldBe(visible, Duration.ofSeconds(15));
+    }
+
+    public void ownerFormatErrorVisible() {
+        ownerFieldError.shouldBe(visible, Duration.ofSeconds(15));
+    }
+
+    public void cvcFormatErrorVisible() {
+        cvcFieldError.shouldBe(visible, Duration.ofSeconds(15));
+    }
+
+    public void cvcEmptyErrorVisible() {
+        cvcEmptyError.shouldBe(visible, Duration.ofSeconds(15));
+    }
+
 }
+
