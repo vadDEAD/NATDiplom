@@ -12,8 +12,7 @@ import java.util.concurrent.TimeUnit;
 import static com.codeborne.selenide.Selenide.open;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static ru.netology.data.DataGenerator.*;
-import static ru.netology.data.SQLHelper.getOrderCount;
-import static ru.netology.data.SQLHelper.getPaymentStatus;
+import static ru.netology.data.SQLHelper.*;
 
 
 public class TourPurchaseTest {
@@ -58,8 +57,9 @@ public class TourPurchaseTest {
         }
 
         @Test
+        @SneakyThrows
         @DisplayName("Error buy a tour declined card")
-        void shouldErrorBuyATourDeclinedCard() throws InterruptedException {
+        void shouldErrorBuyATourDeclinedCard(){
             var purchasePage = new PurchasePage();
             purchasePage.cardPayment();
             var info = getDeclinedCard();
@@ -72,8 +72,9 @@ public class TourPurchaseTest {
         }
 
         @Test
+        @SneakyThrows
         @DisplayName("Error nonexistent card number")
-        void shouldErrorNonexistentCardNumber() throws InterruptedException {
+        void shouldErrorNonexistentCardNumber(){
             var purchasePage = new PurchasePage();
             purchasePage.cardPayment();
             var info = getNonExistentCard();
@@ -87,181 +88,199 @@ public class TourPurchaseTest {
 
         @Test
         @DisplayName("Error incomplete card number")
-        void shouldErrorIncompleteCardNumber() throws InterruptedException {
+        void shouldErrorIncompleteCardNumber(){
             var purchasePage = new PurchasePage();
             purchasePage.cardPayment();
             var info = getCardWithIncompleteCardNumber();
             purchasePage.sendingData(info);
-            TimeUnit.SECONDS.sleep(10);
             var expected = "0";
             var actual = getOrderCount();
+            purchasePage.cardNumberFormatErrorVisible();
             assertEquals(expected, actual);
         }
 
         @Test
         @DisplayName("Error empty card number")
-        void shouldErrorEmptyCardNumber() throws InterruptedException {
+        void shouldErrorEmptyCardNumber(){
             var purchasePage = new PurchasePage();
             purchasePage.cardPayment();
             var info = getCardWithEmptyCardNumber();
             purchasePage.sendingData(info);
-            TimeUnit.SECONDS.sleep(10);
             var expected = "0";
             var actual = getOrderCount();
+            purchasePage.cardNumberFormatErrorVisible();
             assertEquals(expected, actual);
         }
 
         @Test
         @DisplayName("Error empty month")
-        void shouldErrorEmptyMonth() throws InterruptedException {
+        void shouldErrorEmptyMonth(){
             var purchasePage = new PurchasePage();
             purchasePage.cardPayment();
             var info = getCardWithEmptyMonth();
             purchasePage.sendingData(info);
-            TimeUnit.SECONDS.sleep(10);
             var expected = "0";
             var actual = getOrderCount();
+            purchasePage.wrongFormatMonthErrorVisible();
             assertEquals(expected, actual);
         }
 
         @Test
         @DisplayName("Error nonexistent (00) low month")
-        void shouldErrorNonexistentLowMonth() throws InterruptedException {
+        void shouldErrorNonexistentLowMonth(){
             var purchasePage = new PurchasePage();
             purchasePage.cardPayment();
             var info = getCardWithLowNonexistentMonthValue();
             purchasePage.sendingData(info);
-            TimeUnit.SECONDS.sleep(10);
             var expected = "0";
             var actual = getOrderCount();
-            purchasePage.bankDeclined();
+            purchasePage.wrongExpirationMonthErrorVisible();
             assertEquals(expected, actual);
         }
 
         @Test
         @DisplayName("Error nonexistent (14) great month")
-        void shouldErrorNonexistentGreatMonth() throws InterruptedException {
+        void shouldErrorNonexistentGreatMonth(){
             var purchasePage = new PurchasePage();
             purchasePage.cardPayment();
             var info = getCardWithGreatNonexistentMonthValue();
             purchasePage.sendingData(info);
-            TimeUnit.SECONDS.sleep(10);
             var expected = "0";
             var actual = getOrderCount();
-            purchasePage.bankDeclined();
+            purchasePage.wrongExpirationMonthErrorVisible();
             assertEquals(expected, actual);
         }
 
         @Test
         @DisplayName("Error overdue month")
-        void shouldErrorWithOverdueMonth() throws InterruptedException {
+        void shouldErrorWithOverdueMonth(){
             var purchasePage = new PurchasePage();
             purchasePage.cardPayment();
             var info = getCardWithOverdueMonth();
             purchasePage.sendingData(info);
-            TimeUnit.SECONDS.sleep(10);
             var expected = "0";
             var actual = getOrderCount();
-            purchasePage.bankDeclined();
+            purchasePage.wrongExpirationMonthErrorVisible();
             assertEquals(expected, actual);
         }
 
         @Test
         @DisplayName("Error with empty year")
-        void shouldErrorWithEmptyYear() throws InterruptedException {
+        void shouldErrorWithEmptyYear(){
             var purchasePage = new PurchasePage();
             purchasePage.cardPayment();
             var info = getCardWithEmptyYear();
             purchasePage.sendingData(info);
-            TimeUnit.SECONDS.sleep(10);
             var expected = "0";
             var actual = getOrderCount();
+            purchasePage.wrongExpirationYearErrorVisible();
             assertEquals(expected, actual);
         }
 
         @Test
         @DisplayName("Error with overdue year")
-        void shouldErrorWithOverdueYear() throws InterruptedException {
+        void shouldErrorWithOverdueYear(){
             var purchasePage = new PurchasePage();
             purchasePage.cardPayment();
             var info = getCardWithOverdueYear();
             purchasePage.sendingData(info);
-            TimeUnit.SECONDS.sleep(10);
             var expected = "0";
             var actual = getOrderCount();
-            purchasePage.bankDeclined();
+            purchasePage.overdueYearErrorVisible();
             assertEquals(expected, actual);
         }
 
         @Test
         @DisplayName("Error with plus 8 years")
-        void shouldErrorWithPlus8Years() throws InterruptedException {
+        void shouldErrorWithPlus8Years(){
             var purchasePage = new PurchasePage();
             purchasePage.cardPayment();
             var info = getCardWithYearFromFuture();
             purchasePage.sendingData(info);
-            TimeUnit.SECONDS.sleep(10);
             var expected = "0";
             var actual = getOrderCount();
-            purchasePage.bankDeclined();
+            purchasePage.wrongExpirationYearErrorVisible();
+            assertEquals(expected, actual);
+        }
+
+        @Test
+        @DisplayName("Error with not complete year")
+        void shouldErrorWithNotCompleteYears(){
+            var purchasePage = new PurchasePage();
+            purchasePage.cardPayment();
+            var info = getCardWithNotCompleteYear();
+            purchasePage.sendingData(info);
+            var expected = "0";
+            var actual = getOrderCount();
+            purchasePage.wrongFormatYearErrorVisible();
             assertEquals(expected, actual);
         }
 
         @Test
         @DisplayName("Error with space in owner")
-        void shouldErrorWithSpaceInOwner() throws InterruptedException {
+        void shouldErrorWithSpaceInOwner(){
             var purchasePage = new PurchasePage();
             purchasePage.cardPayment();
             var info = getCardWithSpaceInOwner();
             purchasePage.sendingData(info);
-            TimeUnit.SECONDS.sleep(10);
             var expected = "0";
             var actual = getOrderCount();
+            purchasePage.emptyOwnerErrorVisible();
             assertEquals(expected, actual);
         }
 
         @Test
         @DisplayName("Error with special symbols in owner")
-        void shouldErrorWithSpecialSymbolsInOwner() throws InterruptedException {
+        void shouldErrorWithSpecialSymbolsInOwner(){
             var purchasePage = new PurchasePage();
             purchasePage.cardPayment();
             var info = getCardWithSpecialSymbolsInOwner();
             purchasePage.sendingData(info);
-            TimeUnit.SECONDS.sleep(10);
             var expected = "0";
             var actual = getOrderCount();
             purchasePage.bankDeclined();
+            purchasePage.ownerFormatErrorVisible();
             assertEquals(expected, actual);
         }
 
         @Test
         @DisplayName("Error with numbers in owner")
-        void shouldErrorWithNumbersInOwner() throws InterruptedException {
+        void shouldErrorWithNumbersInOwner(){
             var purchasePage = new PurchasePage();
             purchasePage.cardPayment();
             var info = getCardWithNumbersInOwner();
             purchasePage.sendingData(info);
-            TimeUnit.SECONDS.sleep(10);
             var expected = "0";
             var actual = getOrderCount();
-            purchasePage.bankDeclined();
+            purchasePage.ownerFormatErrorVisible();
             assertEquals(expected, actual);
         }
 
         @Test
         @DisplayName("Error with incomplete CVC")
-        void shouldErrorWithWithIncompleteCVC() throws InterruptedException {
+        void shouldErrorWithWithIncompleteCVC(){
             var purchasePage = new PurchasePage();
             purchasePage.cardPayment();
             var info = getCardWithIncompleteCVC();
             purchasePage.sendingData(info);
-            TimeUnit.SECONDS.sleep(10);
             var expected = "0";
             var actual = getOrderCount();
+            purchasePage.cvcFormatErrorVisible();
+            assertEquals(expected, actual);
+        }
+        @Test
+        @DisplayName("Error with empty CVC")
+        void shouldErrorWithWithEmptyCVC(){
+            var purchasePage = new PurchasePage();
+            purchasePage.cardPayment();
+            var info = getCardWithEmptyCVC();
+            purchasePage.sendingData(info);
+            var expected = "0";
+            var actual = getOrderCount();
+            purchasePage.cvcEmptyErrorVisible();
             assertEquals(expected, actual);
         }
     }
-
     @Nested
     //Проверка базы данных "Купить в кредит"
     public class CardCredit {
@@ -270,7 +289,7 @@ public class TourPurchaseTest {
         @DisplayName("Successful buy a tour approved card")
         public void shouldSuccessfullyBuyATourApprovedCard() {
             var purchasePage = new PurchasePage();
-            purchasePage.cardCredit();
+            purchasePage.cardPayment();
             var info = getApprovedCard();
             purchasePage.sendingData(info);
             TimeUnit.SECONDS.sleep(10);
@@ -281,8 +300,9 @@ public class TourPurchaseTest {
         }
 
         @Test
+        @SneakyThrows
         @DisplayName("Error buy a tour declined card")
-        void shouldErrorBuyATourDeclinedCard() throws InterruptedException {
+        void shouldErrorBuyATourDeclinedCard(){
             var purchasePage = new PurchasePage();
             purchasePage.cardCredit();
             var info = getDeclinedCard();
@@ -295,8 +315,9 @@ public class TourPurchaseTest {
         }
 
         @Test
+        @SneakyThrows
         @DisplayName("Error nonexistent card number")
-        void shouldErrorNonexistentCardNumber() throws InterruptedException {
+        void shouldErrorNonexistentCardNumber(){
             var purchasePage = new PurchasePage();
             purchasePage.cardCredit();
             var info = getNonExistentCard();
@@ -310,316 +331,198 @@ public class TourPurchaseTest {
 
         @Test
         @DisplayName("Error incomplete card number")
-        void shouldErrorIncompleteCardNumber() throws InterruptedException {
+        void shouldErrorIncompleteCardNumber(){
             var purchasePage = new PurchasePage();
             purchasePage.cardCredit();
             var info = getCardWithIncompleteCardNumber();
             purchasePage.sendingData(info);
-            TimeUnit.SECONDS.sleep(10);
             var expected = "0";
             var actual = getOrderCount();
+            purchasePage.cardNumberFormatErrorVisible();
             assertEquals(expected, actual);
         }
 
         @Test
         @DisplayName("Error empty card number")
-        void shouldErrorEmptyCardNumber() throws InterruptedException {
+        void shouldErrorEmptyCardNumber(){
             var purchasePage = new PurchasePage();
             purchasePage.cardCredit();
             var info = getCardWithEmptyCardNumber();
             purchasePage.sendingData(info);
-            TimeUnit.SECONDS.sleep(10);
             var expected = "0";
             var actual = getOrderCount();
+            purchasePage.cardNumberFormatErrorVisible();
             assertEquals(expected, actual);
         }
 
         @Test
         @DisplayName("Error empty month")
-        void shouldErrorEmptyMonth() throws InterruptedException {
+        void shouldErrorEmptyMonth(){
             var purchasePage = new PurchasePage();
             purchasePage.cardCredit();
             var info = getCardWithEmptyMonth();
             purchasePage.sendingData(info);
-            TimeUnit.SECONDS.sleep(10);
             var expected = "0";
             var actual = getOrderCount();
+            purchasePage.wrongFormatMonthErrorVisible();
             assertEquals(expected, actual);
         }
 
         @Test
         @DisplayName("Error nonexistent (00) low month")
-        void shouldErrorNonexistentLowMonth() throws InterruptedException {
+        void shouldErrorNonexistentLowMonth(){
             var purchasePage = new PurchasePage();
             purchasePage.cardCredit();
             var info = getCardWithLowNonexistentMonthValue();
             purchasePage.sendingData(info);
-            TimeUnit.SECONDS.sleep(10);
             var expected = "0";
             var actual = getOrderCount();
-            purchasePage.bankDeclined();
+            purchasePage.wrongExpirationMonthErrorVisible();
             assertEquals(expected, actual);
         }
 
         @Test
         @DisplayName("Error nonexistent (14) great month")
-        void shouldErrorNonexistentGreatMonth() throws InterruptedException {
+        void shouldErrorNonexistentGreatMonth(){
             var purchasePage = new PurchasePage();
             purchasePage.cardCredit();
             var info = getCardWithGreatNonexistentMonthValue();
             purchasePage.sendingData(info);
-            TimeUnit.SECONDS.sleep(10);
             var expected = "0";
             var actual = getOrderCount();
-            purchasePage.bankDeclined();
+            purchasePage.wrongExpirationMonthErrorVisible();
             assertEquals(expected, actual);
         }
 
         @Test
         @DisplayName("Error overdue month")
-        void shouldErrorWithOverdueMonth() throws InterruptedException {
+        void shouldErrorWithOverdueMonth(){
             var purchasePage = new PurchasePage();
             purchasePage.cardCredit();
             var info = getCardWithOverdueMonth();
             purchasePage.sendingData(info);
-            TimeUnit.SECONDS.sleep(10);
             var expected = "0";
             var actual = getOrderCount();
-            purchasePage.bankDeclined();
+            purchasePage.wrongExpirationMonthErrorVisible();
             assertEquals(expected, actual);
         }
 
         @Test
         @DisplayName("Error with empty year")
-        void shouldErrorWithEmptyYear() throws InterruptedException {
+        void shouldErrorWithEmptyYear(){
             var purchasePage = new PurchasePage();
             purchasePage.cardCredit();
             var info = getCardWithEmptyYear();
             purchasePage.sendingData(info);
-            TimeUnit.SECONDS.sleep(10);
             var expected = "0";
             var actual = getOrderCount();
+            purchasePage.wrongExpirationYearErrorVisible();
             assertEquals(expected, actual);
         }
 
         @Test
         @DisplayName("Error with overdue year")
-        void shouldErrorWithOverdueYear() throws InterruptedException {
+        void shouldErrorWithOverdueYear(){
             var purchasePage = new PurchasePage();
             purchasePage.cardCredit();
             var info = getCardWithOverdueYear();
             purchasePage.sendingData(info);
-            TimeUnit.SECONDS.sleep(10);
             var expected = "0";
             var actual = getOrderCount();
-            purchasePage.bankDeclined();
+            purchasePage.overdueYearErrorVisible();
             assertEquals(expected, actual);
         }
 
         @Test
         @DisplayName("Error with plus 8 years")
-        void shouldErrorWithPlus8Years() throws InterruptedException {
+        void shouldErrorWithPlus8Years(){
             var purchasePage = new PurchasePage();
             purchasePage.cardCredit();
             var info = getCardWithYearFromFuture();
             purchasePage.sendingData(info);
-            TimeUnit.SECONDS.sleep(10);
             var expected = "0";
             var actual = getOrderCount();
-            purchasePage.bankDeclined();
+            purchasePage.wrongExpirationYearErrorVisible();
+            assertEquals(expected, actual);
+        }
+
+        @Test
+        @DisplayName("Error with not complete year")
+        void shouldErrorWithNotCompleteYears(){
+            var purchasePage = new PurchasePage();
+            purchasePage.cardCredit();
+            var info = getCardWithNotCompleteYear();
+            purchasePage.sendingData(info);
+            var expected = "0";
+            var actual = getOrderCount();
+            purchasePage.wrongFormatYearErrorVisible();
             assertEquals(expected, actual);
         }
 
         @Test
         @DisplayName("Error with space in owner")
-        void shouldErrorWithSpaceInOwner() throws InterruptedException {
+        void shouldErrorWithSpaceInOwner(){
             var purchasePage = new PurchasePage();
             purchasePage.cardCredit();
             var info = getCardWithSpaceInOwner();
             purchasePage.sendingData(info);
-            TimeUnit.SECONDS.sleep(10);
             var expected = "0";
             var actual = getOrderCount();
+            purchasePage.emptyOwnerErrorVisible();
             assertEquals(expected, actual);
         }
 
         @Test
         @DisplayName("Error with special symbols in owner")
-        void shouldErrorWithSpecialSymbolsInOwner() throws InterruptedException {
+        void shouldErrorWithSpecialSymbolsInOwner(){
             var purchasePage = new PurchasePage();
             purchasePage.cardCredit();
             var info = getCardWithSpecialSymbolsInOwner();
             purchasePage.sendingData(info);
-            TimeUnit.SECONDS.sleep(10);
             var expected = "0";
             var actual = getOrderCount();
             purchasePage.bankDeclined();
+            purchasePage.ownerFormatErrorVisible();
             assertEquals(expected, actual);
         }
 
         @Test
         @DisplayName("Error with numbers in owner")
-        void shouldErrorWithNumbersInOwner() throws InterruptedException {
+        void shouldErrorWithNumbersInOwner(){
             var purchasePage = new PurchasePage();
             purchasePage.cardCredit();
             var info = getCardWithNumbersInOwner();
             purchasePage.sendingData(info);
-            TimeUnit.SECONDS.sleep(10);
             var expected = "0";
             var actual = getOrderCount();
-            purchasePage.bankDeclined();
+            purchasePage.ownerFormatErrorVisible();
             assertEquals(expected, actual);
         }
 
         @Test
         @DisplayName("Error with incomplete CVC")
-        void shouldErrorWithWithIncompleteCVC() throws InterruptedException {
+        void shouldErrorWithWithIncompleteCVC(){
             var purchasePage = new PurchasePage();
             purchasePage.cardCredit();
             var info = getCardWithIncompleteCVC();
             purchasePage.sendingData(info);
-            TimeUnit.SECONDS.sleep(10);
             var expected = "0";
             var actual = getOrderCount();
+            purchasePage.cvcFormatErrorVisible();
+            assertEquals(expected, actual);
+        }
+        @Test
+        @DisplayName("Error with empty CVC")
+        void shouldErrorWithWithEmptyCVC(){
+            var purchasePage = new PurchasePage();
+            purchasePage.cardCredit();
+            var info = getCardWithEmptyCVC();
+            purchasePage.sendingData(info);
+            var expected = "0";
+            var actual = getOrderCount();
+            purchasePage.cvcEmptyErrorVisible();
             assertEquals(expected, actual);
         }
     }
-
-    @Nested
-    //Уведомления об ошибке на странице
-    public class CreditFormFieldValidation {
-
-        @BeforeEach
-        public void setPayment() {
-            var purchasePage = new PurchasePage();
-            purchasePage.cardCredit();
-        }
-
-        @Test
-        @DisplayName("Error empty form")
-        public void shouldEmpty() {
-            var purchasePage = new PurchasePage();
-            purchasePage.emptyForm();
-        }
-
-        @Test
-        @DisplayName("Error empty card number")
-        public void shouldEmptyCardNumberField() {
-            var purchasePage = new PurchasePage();
-            var info = getApprovedCard();
-            purchasePage.emptyCardNumberField(info);
-        }
-
-        @Test
-        @DisplayName("Error incomplete card number")
-        public void shouldCardWithIncompleteCardNumber() {
-            var purchasePage = new PurchasePage();
-            var info = getCardWithIncompleteCardNumber();
-            purchasePage.invalidCardNumberField(info);
-        }
-
-        @Test
-        @DisplayName("Error empty month")
-        public void shouldEmptyMonthField() {
-            var purchasePage = new PurchasePage();
-            var info = getApprovedCard();
-            purchasePage.emptyMonthField(info);
-        }
-
-        @Test
-        @DisplayName("Error overdue month")
-        public void shouldCardWithOverdueMonth() {
-            var purchasePage = new PurchasePage();
-            var info = getCardWithOverdueMonth();
-            purchasePage.invalidMonthField(info);
-        }
-
-        @Test
-        @DisplayName("Error low non existing (00) Month")
-        public void shouldCardWithLowerMonthValue() {
-            var purchasePage = new PurchasePage();
-            var info = getCardWithLowNonexistentMonthValue();
-            purchasePage.invalidMonthField(info);
-        }
-
-        @Test
-        @DisplayName("Error max non existing (14) Month")
-        public void shouldCardWithGreaterMonthValue() {
-            var purchasePage = new PurchasePage();
-            var info = getCardWithGreatNonexistentMonthValue();
-            purchasePage.invalidMonthField(info);
-        }
-
-        @Test
-        @DisplayName("Error empty year")
-        public void shouldEmptyYearField() {
-            var purchasePage = new PurchasePage();
-            var info = getApprovedCard();
-            purchasePage.emptyYearField(info);
-        }
-
-        @Test
-        @DisplayName("Error overdue year")
-        public void shouldCardWithOverdueYear() {
-            var purchasePage = new PurchasePage();
-            var info = getCardWithOverdueYear();
-            purchasePage.invalidYearField(info);
-        }
-
-        @Test
-        @DisplayName("Error overdue (+8) year")
-        public void shouldCardWithYearFromFuture() {
-            var purchasePage = new PurchasePage();
-            var info = getCardWithYearFromFuture();
-            purchasePage.invalidYearField(info);
-        }
-
-        @Test
-        @DisplayName("Error message empty owner")
-        public void shouldEmptyOwnerField() {
-            var purchasePage = new PurchasePage();
-            var info = getApprovedCard();
-            purchasePage.emptyOwnerField(info);
-        }
-
-        @Test
-        @DisplayName("Error message Space in owner")
-        public void shouldCardWithSpaceInOwner() {
-            var purchasePage = new PurchasePage();
-            var info = getCardWithSpaceInOwner();
-            purchasePage.invalidOwnerField(info);
-        }
-
-        @Test
-        @DisplayName("Error message special symbols in owner")
-        public void shouldCardWithSpecialSymbolsInOwner() {
-            var purchasePage = new PurchasePage();
-            var info = getCardWithSpecialSymbolsInOwner();
-            purchasePage.invalidOwnerField(info);
-        }
-
-        @Test
-        @DisplayName("Error message numbers in owner")
-        public void shouldCardWithNumbersInOwner() {
-            var purchasePage = new PurchasePage();
-            var info = getCardWithNumbersInOwner();
-            purchasePage.invalidOwnerField(info);
-        }
-
-        @Test
-        @DisplayName("Error message empty CVC/CVV")
-        public void shouldEmptyCVCField() {
-            var purchasePage = new PurchasePage();
-            var info = getApprovedCard();
-            purchasePage.emptyCVCField(info);
-        }
-
-        @Test
-        @DisplayName("Error message incomplete CVC/CVV")
-        public void shouldCardWithIncompleteCVC() {
-            var purchasePage = new PurchasePage();
-            var info = getCardWithIncompleteCVC();
-            purchasePage.invalidCVCField(info);
-        }
-    }
 }
+
