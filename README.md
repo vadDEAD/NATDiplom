@@ -7,6 +7,11 @@
 - Обычная оплата по дебетовой карте
 - Уникальная технология: выдача кредита по данным банковской карты
 
+### Документация:
+1. [План автоматизации](https://github.com/vadDEAD/NATDiplom/blob/master/documents/Plan.md)
+2. [Отчет о проведенном тестировании](https://github.com/vadDEAD/NATDiplom/blob/master/documents/Report.md)
+
+
 ### Необходимое окружение:
 
 * установленный Docker;
