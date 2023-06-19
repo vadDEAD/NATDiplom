@@ -64,53 +64,53 @@ public class PurchasePage {
     }
 
     public void bankApproved() {
-        notificationSuccessfully.shouldBe(Condition.visible);
+        notificationSuccessfully.shouldBe(Condition.visible, Duration.ofSeconds(15));
     }
 
     public void bankDeclined() {
-        notificationError.shouldBe(Condition.visible);
+        notificationError.shouldBe(Condition.visible, Duration.ofSeconds(15));
     }
 
     public void cardNumberFormatErrorVisible() {
-        cardNumberFieldError.shouldBe(visible, Duration.ofSeconds(15));
+        cardNumberFieldError.shouldBe(visible);
     }
 
 
     public void wrongFormatMonthErrorVisible() {
-        monthFieldError.shouldBe(visible, Duration.ofSeconds(15));
+        monthFieldError.shouldBe(visible);
     }
 
     public void wrongExpirationMonthErrorVisible() {
-        wrongExpirationMonthError.shouldBe(visible, Duration.ofSeconds(15));
+        wrongExpirationMonthError.shouldBe(visible);
     }
 
     public void overdueYearErrorVisible() {
-        previousYearError.shouldBe(visible, Duration.ofSeconds(15));
+        previousYearError.shouldBe(visible);
     }
 
     public void wrongFormatYearErrorVisible() {
-        yearFieldError.shouldBe(visible, Duration.ofSeconds(15));
+        yearFieldError.shouldBe(visible);
     }
 
     public void wrongExpirationYearErrorVisible() {
-        wrongExpirationYearError.shouldBe(visible, Duration.ofSeconds(15));
+        wrongExpirationYearError.shouldBe(visible);
     }
 
 
     public void emptyOwnerErrorVisible() {
-        emptyOwnerError.shouldBe(visible, Duration.ofSeconds(15));
+        emptyOwnerError.shouldBe(visible);
     }
 
     public void ownerFormatErrorVisible() {
-        ownerFieldError.shouldBe(visible, Duration.ofSeconds(15));
+        ownerFieldError.shouldBe(visible);
     }
 
     public void cvcFormatErrorVisible() {
-        cvcFieldError.shouldBe(visible, Duration.ofSeconds(15));
+        cvcFieldError.shouldBe(visible);
     }
 
     public void cvcEmptyErrorVisible() {
-        cvcEmptyError.shouldBe(visible, Duration.ofSeconds(15));
+        cvcEmptyError.shouldBe(visible);
     }
 
 }

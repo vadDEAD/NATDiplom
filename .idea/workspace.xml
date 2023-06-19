@@ -4,9 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="09123400-e84f-499f-979f-284b98b0facb" name="Changes" comment="15.06. Обновлен план запуска">
+    <list default="true" id="09123400-e84f-499f-979f-284b98b0facb" name="Changes" comment="15.06. rework and add tests">
+      <change afterPath="$PROJECT_DIR$/documents/Report.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/documents/screenshots/Credit.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/documents/screenshots/Overview.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/documents/screenshots/Payment.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/ru/netology/data/DataGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ru/netology/data/DataGenerator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/ru/netology/page/PurchasePage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ru/netology/page/PurchasePage.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/ru/netology/tests/TourPurchaseTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ru/netology/tests/TourPurchaseTest.java" afterDir="false" />
     </list>
@@ -79,11 +82,12 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\NetologiDZ\avtotest\Diplom\documents\screenshot" />
       <recent name="D:\NetologiDZ\avtotest\Diplom\gate-simulator" />
       <recent name="D:\NetologiDZ\avtotest\Diplom" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.CardCredit.shouldErrorWithNumbersInOwner">
+  <component name="RunManager" selected="Gradle.CardPayment.shouldErrorIncompleteCardNumber">
     <configuration name="CardCredit.shouldErrorWithNumbersInOwner" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -98,30 +102,6 @@
             <option value=":test" />
             <option value="--tests" />
             <option value="&quot;ru.netology.tests.TourPurchaseTest$CardCredit.shouldErrorWithNumbersInOwner&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <ForceTestExec>true</ForceTestExec>
-      <method v="2" />
-    </configuration>
-    <configuration name="CardPayment.shouldErrorBuyATourDeclinedCard" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":test" />
-            <option value="--tests" />
-            <option value="&quot;ru.netology.tests.TourPurchaseTest$CardPayment.shouldErrorBuyATourDeclinedCard&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -156,7 +136,7 @@
       <ForceTestExec>true</ForceTestExec>
       <method v="2" />
     </configuration>
-    <configuration name="CardPayment.shouldErrorWithNumbersInOwner" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="CardPayment.shouldErrorNonexistentCardNumber" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -169,7 +149,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;ru.netology.tests.TourPurchaseTest$CardPayment.shouldErrorWithNumbersInOwner&quot;" />
+            <option value="&quot;ru.netology.tests.TourPurchaseTest$CardPayment.shouldErrorNonexistentCardNumber&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -204,6 +184,30 @@
       <ForceTestExec>true</ForceTestExec>
       <method v="2" />
     </configuration>
+    <configuration name="CardPayment.shouldSuccessfullyBuyATourApprovedCard" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;ru.netology.tests.TourPurchaseTest$CardPayment.shouldSuccessfullyBuyATourApprovedCard&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <ForceTestExec>true</ForceTestExec>
+      <method v="2" />
+    </configuration>
     <configuration default="true" type="docker-deploy" factoryName="docker-compose.yml" temporary="true">
       <deployment type="docker-compose.yml">
         <settings />
@@ -218,11 +222,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.CardPayment.shouldErrorIncompleteCardNumber" />
+        <item itemvalue="Gradle.CardPayment.shouldErrorNonexistentCardNumber" />
+        <item itemvalue="Gradle.CardPayment.shouldSuccessfullyBuyATourApprovedCard" />
         <item itemvalue="Gradle.CardCredit.shouldErrorWithNumbersInOwner" />
         <item itemvalue="Gradle.CardPayment.shouldErrorWithWithEmptyCVC" />
-        <item itemvalue="Gradle.CardPayment.shouldErrorWithNumbersInOwner" />
-        <item itemvalue="Gradle.CardPayment.shouldErrorBuyATourDeclinedCard" />
-        <item itemvalue="Gradle.CardPayment.shouldErrorIncompleteCardNumber" />
       </list>
     </recent_temporary>
   </component>
@@ -462,7 +466,28 @@
       <option name="project" value="LOCAL" />
       <updated>1686783844330</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="15.06. fix DataGenerator">
+      <created>1686836955588</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1686836955588</updated>
+    </task>
+    <task id="LOCAL-00034" summary="15.06. fix PurchasePage">
+      <created>1686836975569</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1686836975569</updated>
+    </task>
+    <task id="LOCAL-00035" summary="15.06. rework and add tests">
+      <created>1686836998190</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1686836998190</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -483,7 +508,10 @@
     <MESSAGE value="15.06.23" />
     <MESSAGE value="15.06. Обновил план запуска" />
     <MESSAGE value="15.06. Обновлен план запуска" />
-    <option name="LAST_COMMIT_MESSAGE" value="15.06. Обновлен план запуска" />
+    <MESSAGE value="15.06. fix DataGenerator" />
+    <MESSAGE value="15.06. fix PurchasePage" />
+    <MESSAGE value="15.06. rework and add tests" />
+    <option name="LAST_COMMIT_MESSAGE" value="15.06. rework and add tests" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand>
