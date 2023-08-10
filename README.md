@@ -10,6 +10,7 @@
 ### Документация:
 1. [План автоматизации](https://github.com/vadDEAD/NATDiplom/blob/master/documents/Plan.md)
 2. [Отчет о проведенном тестировании](https://github.com/vadDEAD/NATDiplom/blob/master/documents/Report.md)
+3. [Отчет по итогам](https://github.com/vadDEAD/NATDiplom/blob/master/documents/Summary.md)
 
 
 ### Необходимое окружение:
