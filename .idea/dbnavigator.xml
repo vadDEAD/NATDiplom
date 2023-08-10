@@ -5,6 +5,12 @@
     <value-preview-text-wrapping value="false" />
     <value-preview-pinned value="false" />
   </component>
+  <component name="DBNavigator.Project.DatabaseBrowserManager">
+    <autoscroll-to-editor value="false" />
+    <autoscroll-from-editor value="true" />
+    <show-object-properties value="true" />
+    <loaded-nodes />
+  </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="c2e2c5dd-7086-47d3-9f5d-aeeb653f55b6">
       <console name="Postgre" type="STANDARD" schema="postgres" session="Main" />
@@ -19,6 +25,10 @@
   <component name="DBNavigator.Project.DatabaseFileManager">
     <open-files />
   </component>
+  <component name="DBNavigator.Project.ObjectQuickFilterManager">
+    <last-used-operator value="EQUAL" />
+    <filters />
+  </component>
   <component name="DBNavigator.Project.Settings">
     <connections>
       <connection id="c2e2c5dd-7086-47d3-9f5d-aeeb653f55b6" active="true" signed="true">
@@ -27,7 +37,7 @@
           <description value="" />
           <database-type value="POSTGRES" />
           <config-type value="BASIC" />
-          <database-version value="15.3" />
+          <database-version value="14.8" />
           <driver-source value="BUILTIN" />
           <driver-library value="" />
           <driver value="" />
